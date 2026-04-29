@@ -74,7 +74,7 @@ body {
 }
 
 /* LAYOUT */
-.container {
+.main-container {
     max-width: 1200px;
     margin: auto;
     padding: 90px 15px 40px;
@@ -329,11 +329,11 @@ model-viewer {
     <h1>🧊 Balok - GEOSMART</h1>
 </header>
 
-<div class="container">
+<div class="main-container">
 
     <!-- PRATINJAU 3D -->
     <div class="section">
-        <h2>Visualisasi 3D (Blender)</h2>
+        <h2>Visualisasi 3D </h2>
         <div class="viewer-box">
             <model-viewer 
                 src="assets/images/bangunruang/balok.glb"
@@ -496,7 +496,6 @@ model-viewer {
                 <button class="btn btn-outline-info opt-btn" onclick="cekEksplorasi('sisi', '6 Sisi', this)">8 Sisi</button>
                 <div id="res-sisi" class="mt-2 fw-bold"></div>
             </div>
-            </div>
 
             <div id="rusuk" class="tab-content">
                 <div class="iframe-wrapper">
@@ -512,7 +511,6 @@ model-viewer {
                 <button class="btn btn-outline-info opt-btn" onclick="cekEksplorasi('rusuk', '12 Rusuk', this)">10 Rusuk</button>
                 <button class="btn btn-outline-info opt-btn" onclick="cekEksplorasi('rusuk', '12 Rusuk', this)">12 Rusuk</button>
                 <div id="res-rusuk" class="mt-2 fw-bold"></div>
-            </div>
             </div>
 
             <div id="dbidang" class="tab-content">
@@ -531,8 +529,6 @@ model-viewer {
                 <div id="res-db" class="mt-2 fw-bold"></div>
             </div>
 
-            </div>
-
             <div id="druang" class="tab-content">
                 <div class="iframe-wrapper">
                     <iframe src="https://www.geogebra.org/material/iframe/id/wxpnps8g/width/1000/height/650/allowUpscale=true/rc=false/ai=false/sdz=false/smb=false/stb=false/stbh=false/ld=false/sri=false"></iframe>
@@ -547,7 +543,6 @@ model-viewer {
                 <button class="btn btn-outline-info opt-btn" onclick="cekEksplorasi('dr', '4 Garis', this)">4 Garis</button>
                 <button class="btn btn-outline-info opt-btn" onclick="cekEksplorasi('dr', '4 Garis', this)">8 Garis</button>
                 <div id="res-dr" class="mt-2 fw-bold"></div>
-            </div>
             </div>
 
             <div id="bdiag" class="tab-content">
@@ -565,7 +560,7 @@ model-viewer {
                 <button class="btn btn-outline-info opt-btn" onclick="cekEksplorasi('bd2', '6 Bidang', this)">12 Bidang</button>
                 <div id="res-bd2" class="mt-2 fw-bold"></div>
             </div>
-            </div>
+
 
             <div id="jaring" class="tab-content">
                 <div class="iframe-wrapper">
