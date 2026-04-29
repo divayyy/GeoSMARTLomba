@@ -168,61 +168,73 @@
 
         .edu-card h3 { font-size: 1.8rem; font-weight: 800; margin-bottom: 12px; color: white; }
         .edu-card p { font-size: 1rem; color: rgba(255, 255, 255, 0.8); margin: 0; }
-/* --- GANTI BAGIAN @media LAMA DENGAN INI --- */
-@media (max-width: 768px) {
-    body { 
-        overflow-y: auto; 
-        height: auto; 
-        padding-bottom: 50px; 
-    }
-    
-    .hero { 
-        padding-top: 100px; 
+
+    /* ... (Kode CSS bagian atas tetap sama) ... */
+
+    /* --- REVISI BAGIAN MEDIA QUERY --- */
+    @media (max-width: 768px) {
+        body { 
+            overflow-y: auto; 
+            height: auto; 
+            padding-bottom: 50px; 
+        }
+
+        /* Selector disamakan dengan HTML kamu yaitu .hero-section */
+        .hero-section { 
+            padding: 100px 20px 40px !important; 
+        }
+
+        /* Mengatur judul agar mengecil secara efektif */
+        .hero-section h1 { 
+            font-size: 2rem !important; /* Gunakan 2rem agar pas, jangan 0.1rem */
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .hello-tag {
+            font-size: 12px;
+            letter-spacing: 2px;
+        }
+
+        .desc {
+            font-size: 1rem;
+            padding: 0 10px;
+        }
+
+        /* Mengatur Card agar berjejer 2 kolom di HP */
+        .card-container { 
+            display: grid !important;
+            grid-template-columns: repeat(2, 1fr); 
+            gap: 12px; 
+            padding: 0 15px;
+        }
+
+        .edu-card {
+            width: 100%; /* Agar mengikuti grid */
+            padding: 30px 15px;
+            border-radius: 20px;
+        }
+
+        .icon-box {
+            width: 50px;
+            height: 50px;
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .edu-card h3 { 
+            font-size: 1.2rem; 
+        }
+
+        .edu-card p { 
+            font-size: 0.7rem; 
+        }
+
+        .navbar {
+            padding: 15px 25px;
+        }
     }
 
-    .hero h1 { 
-        font-size: 1.8rem; /* Ukuran judul disesuaikan agar tidak penuh */
-    }
-
-    /* Mengatur agar tetap 2 kolom di HP */
-    .menu-grid { 
-        grid-template-columns: repeat(2, 1fr); 
-        gap: 12px; 
-        padding: 0 15px;
-        max-width: 100%; /* Agar tombol bisa melebar memenuhi layar */
-    }
-
-    .edu-card {
-        padding: 25px 10px; /* Padding dalam dikurangi agar teks muat */
-        border-radius: 18px;
-    }
-
-    .edu-card i { 
-        font-size: 35px; /* Ukuran ikon diperkecil sedikit */
-        margin-bottom: 15px; 
-    }
-
-    .edu-card h5 { 
-        font-size: 1rem; 
-    }
-
-    .edu-card p { 
-        font-size: 0.75rem; 
-        line-height: 1.2;
-    }
-
-    /* Tutorial tetap tumpuk ke bawah agar tidak terlalu sempit */
-    .tutor-grid { 
-        flex-direction: column; 
-        align-items: center; 
-        padding: 0 20px;
-    }
-
-    .tutor-btn {
-        width: 100%; /* Tombol tutorial dibuat penuh */
-        justify-content: center;
-    }
-}
     </style>
 </head>
 <body>
