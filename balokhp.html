@@ -152,20 +152,40 @@ model-viewer {
     animation: fadeIn 0.5s ease; 
 }
 
-/* GEOGEBRA IFRAME */
-.geo-box .iframe-wrapper {
+/* ========================= */
+/* 🔥 GEOGEBRA RESPONSIVE 🔥 */
+/* ========================= */
+.iframe-wrapper {
     position: relative;
     width: 100%;
-    padding-bottom: 65%;
-    height: 0;
+    /* Tinggi dikurangi agar tidak ada ruang kosong di bawah */
+    height: 300px; 
+    /* Ubah background dari #ffffff ke warna gelap atau transparan */
+    background: transparent; 
+    border-radius: 15px;
     overflow: hidden;
-    border-radius: 12px;
+    border: 3px solid #38bdf8;
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
-.geo-box .iframe-wrapper iframe {
+
+.iframe-wrapper iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    /* Memastikan tidak ada margin internal dari iframe */
+    margin: 0;
+    padding: 0;
+}
+.iframe-wrapper iframe {
     position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    border: 0;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
+    border: none;
 }
 
 /* FORMULA & PROPERTY CARDS */
