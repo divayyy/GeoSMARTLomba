@@ -201,19 +201,37 @@
             padding: 0 10px;
         }
 
-        /* Mengatur Card agar berjejer 2 kolom di HP */
-        .card-container { 
-            display: grid !important;
-            grid-template-columns: repeat(2, 1fr); 
-            gap: 12px; 
-            padding: 0 15px;
-        }
+@media (max-width: 768px) {
+    /* ... kode lainnya ... */
 
-        .edu-card {
-            width: 100%; /* Agar mengikuti grid */
-            padding: 30px 15px;
-            border-radius: 20px;
-        }
+    .card-container { 
+        display: grid !important;
+        /* Ini kunci utamanya: repeat(2, 1fr) membuat 2 kolom sama lebar */
+        grid-template-columns: repeat(2, 1fr); 
+        /* align-items: stretch memastikan tinggi kartu kiri & kanan selalu sama */
+        align-items: stretch; 
+        gap: 15px; 
+        padding: 0 15px;
+    }
+
+    .edu-card {
+        width: 100% !important; /* Biarkan grid yang mengatur lebarnya */
+        height: 100%; /* Paksa tinggi penuh sesuai container */
+        display: flex;
+        flex-direction: column;
+        justify-content: center; /* Agar konten tetap di tengah secara vertikal */
+        padding: 30px 10px;
+    }
+
+    /* Tambahkan ini agar teks deskripsi punya ruang yang sama */
+    .edu-card p {
+        min-height: 40px; /* Memberi ruang cadangan agar kartu tidak menclok */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        line-height: 1.2;
+    }
+}
 
         .icon-box {
             width: 50px;
