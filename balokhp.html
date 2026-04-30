@@ -1075,71 +1075,67 @@ model-viewer {
         }
     }
 
-    // TANYA GEMINI AI (dari file kedua - sudah BALOK)
-    function tanyaGemini(mode) {
-        let pesan = "";
 
-        if (mode === "pengertian") {
-            pesan = `Saya siswa SMP. Jelaskan pengertian balok dengan bahasa sangat sederhana seperti guru.
-Gunakan contoh benda sehari-hari agar mudah dipahami.`;
-        } 
+function tanyaGemini(mode) {
+    let pesan = "";
 
-        else if (mode === "ciri") {
-            pesan = `Saya siswa SMP. Jelaskan ciri-ciri balok dengan cara mudah diingat.
-Gunakan poin-poin sederhana dan contoh benda nyata.`;
-        } 
-
-        else if (mode === "unsur") {
-            pesan = `Saya siswa SMP. Jelaskan unsur-unsur balok (sisi, rusuk, sudut, diagonal).
-Bantu saya membayangkan bentuknya dengan penjelasan sederhana.`;
-        } 
-
-        else if (mode === "rumus") {
-            pesan = `Saya siswa SMP. Jelaskan rumus balok (luas permukaan dan volume) secara pelan-pelan.
-Berikan:
-1. Arti simbol (p, l, t)
-2. Cara menghitung
-3. Contoh soal
-4. Pembahasan bertahap`;
-        } 
-
-        else if (mode === "latihan") {
-            pesan = `Saya siswa SMP. Berikan 1 soal tentang balok.
-Jangan langsung beri jawaban, tapi beri petunjuk (clue) langkah demi langkah.
-Setelah itu baru beri pembahasan lengkap.`;
-        } 
-
-        else if (mode === "jaring") {
-            pesan = `Saya siswa SMP. Tolong jelaskan jaring-jaring balok seperti guru mengajar di kelas.
-Gunakan:
-- bahasa sederhana
-- analogi (misalnya kardus dibuka)
-- langkah membayangkan
-- 1 pertanyaan kecil untuk saya jawab`;
-        } 
-
-        else if (mode === "dunia") {
-            pesan = `Saya siswa SMP. Jelaskan contoh balok dalam kehidupan sehari-hari dengan cara sederhana.
-Gunakan:
-- contoh nyata
-- penjelasan mudah dipahami
-- kaitkan dengan volume dan luas
-- beri 1 pertanyaan latihan`;
-        }
-
-        // ⛔ kalau mode tidak ditemukan
-        if (pesan === "") {
-            alert("Mode tidak dikenali!");
-            return;
-        }
-
-        // COPY ke clipboard
-        navigator.clipboard.writeText(pesan).catch(()=>{});
-
-        // Buka Gemini
-        const url = `https://gemini.google.com/app?q=${encodeURIComponent(pesan)}`;
-        window.open(url, "_blank");
+    if (mode === "pengertian") {
+        pesan = "Jelaskan pengertian balok dengan bahasa sederhana untuk siswa SMP.";
+    } 
+    else if (mode === "ciri") {
+        pesan = "Jelaskan ciri-ciri balok dengan contoh nyata.";
+    } 
+    else if (mode === "unsur") {
+        pesan = "Jelaskan unsur balok secara sederhana.";
+    } 
+    else if (mode === "rumus") {
+        pesan = "Jelaskan rumus balok dengan langkah dan contoh.";
+    } 
+    else if (mode === "latihan") {
+        pesan = "Berikan 1 soal balok dengan petunjuk langkah.";
+    } 
+    else if (mode === "dunia") {
+        pesan = "Contoh balok dalam kehidupan sehari-hari.";
     }
+
+    if (!pesan) {
+        alert("Mode tidak dikenali");
+        return;
+    }
+
+    // 🔥 COBA AUTO COPY
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(pesan).then(() => {
+            alert("Prompt berhasil disalin! Akan buka Gemini.");
+            bukaGemini();
+        }).catch(() => {
+            fallbackCopy(pesan);
+        });
+    } else {
+        fallbackCopy(pesan);
+    }
+}
+
+
+// fallback jika clipboard gagal
+function fallbackCopy(text) {
+    const textarea = document.createElement("textarea");
+    textarea.value = text;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand("copy");
+    document.body.removeChild(textarea);
+
+    alert("Prompt disalin (mode fallback). Akan buka Gemini.");
+    bukaGemini();
+}
+
+
+// buka Gemini (AMAN, bukan popup)
+function bukaGemini() {
+    window.location.href = "https://gemini.google.com/app";
+}
+
 </script>
 
 </body>

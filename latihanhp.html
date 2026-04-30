@@ -133,27 +133,55 @@ GeoSMART © 2026 | Platform Numerasi Interaktif GeoSMART
 </div>
 
 <script>
+
 function tanyaAI(btn){
-    // Mengambil teks soal tanpa teks pada tombol
     const soal = btn.parentElement.querySelector('p').innerText;
 
     const prompt = `
 Kamu adalah AI guru GeoSMART.
 
-Tugas kamu:
-- Hanya memberi PETUNJUK (clue) langkah demi langkah.
-- JANGAN memberi jawaban akhir secara langsung.
-- Bantu siswa memahami konsep (misalnya konversi satuan atau rumus yang tepat).
+Tugas:
+- Beri PETUNJUK (clue) langkah demi langkah
+- Jangan beri jawaban langsung
 
 Soal:
 ${soal}
 `;
 
-    navigator.clipboard.writeText(prompt).then(() => {
-        alert("Prompt petunjuk telah disalin! Silakan tempelkan di Gemini.");
-        window.open("https://gemini.google.com/app", "_blank");
-    });
+    copyAndOpen(prompt);
 }
+
+
+// 🔥 fungsi utama
+function copyAndOpen(text){
+    
+    // coba clipboard modern
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(() => {
+            alert("✅ Prompt sudah disalin!\nSetelah ini Gemini terbuka, langsung paste ya.");
+            window.location.href = "https://gemini.google.com/app";
+        }).catch(() => {
+            fallback(text);
+        });
+    } else {
+        fallback(text);
+    }
+}
+
+
+// 🔁 fallback biar tetap bisa di HP lama
+function fallback(text){
+    const textarea = document.createElement("textarea");
+    textarea.value = text;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand("copy");
+    document.body.removeChild(textarea);
+
+    alert("✅ Prompt disalin (mode fallback)\nGemini akan dibuka.");
+    window.location.href = "https://gemini.google.com/app";
+}
+
 </script>
 
 </body>
