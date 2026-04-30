@@ -1109,7 +1109,6 @@ model-viewer {
         }
     }
 
-<<<<<<< HEAD
  function tanyaGemini(mode) {
     let pesan = "";
 
@@ -1164,69 +1163,6 @@ model-viewer {
         window.open(geminiUrl, '_blank');
     }
 }
-=======
-
-function tanyaGemini(mode) {
-    let pesan = "";
-
-    if (mode === "pengertian") {
-        pesan = "Jelaskan pengertian balok dengan bahasa sederhana untuk siswa SMP.";
-    } 
-    else if (mode === "ciri") {
-        pesan = "Jelaskan ciri-ciri balok dengan contoh nyata.";
-    } 
-    else if (mode === "unsur") {
-        pesan = "Jelaskan unsur balok secara sederhana.";
-    } 
-    else if (mode === "rumus") {
-        pesan = "Jelaskan rumus balok dengan langkah dan contoh.";
-    } 
-    else if (mode === "latihan") {
-        pesan = "Berikan 1 soal balok dengan petunjuk langkah.";
-    } 
-    else if (mode === "dunia") {
-        pesan = "Contoh balok dalam kehidupan sehari-hari.";
-    }
-
-    if (!pesan) {
-        alert("Mode tidak dikenali");
-        return;
-    }
-
-    // 🔥 COBA AUTO COPY
-    if (navigator.clipboard && window.isSecureContext) {
-        navigator.clipboard.writeText(pesan).then(() => {
-            alert("Prompt berhasil disalin! Akan buka Gemini.");
-            bukaGemini();
-        }).catch(() => {
-            fallbackCopy(pesan);
-        });
-    } else {
-        fallbackCopy(pesan);
-    }
-}
-
-
-// fallback jika clipboard gagal
-function fallbackCopy(text) {
-    const textarea = document.createElement("textarea");
-    textarea.value = text;
-    document.body.appendChild(textarea);
-    textarea.select();
-    document.execCommand("copy");
-    document.body.removeChild(textarea);
-
-    alert("Prompt disalin (mode fallback). Akan buka Gemini.");
-    bukaGemini();
-}
-
-
-// buka Gemini (AMAN, bukan popup)
-function bukaGemini() {
-    window.location.href = "https://gemini.google.com/app";
-}
-
->>>>>>> 90ea1ba20d73dfbcb1dcaec41b500ec418e7e9ea
 </script>
 
 </body>

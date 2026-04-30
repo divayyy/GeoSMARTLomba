@@ -182,26 +182,15 @@ GeoSMART © 2026 | Platform Numerasi Interaktif GeoSMART
 </div>
 
 <script>
-<<<<<<< HEAD
 let currentPrompt = '';
-=======
->>>>>>> 90ea1ba20d73dfbcb1dcaec41b500ec418e7e9ea
 
 function tanyaAI(btn){
     const soal = btn.parentElement.querySelector('p').innerText;
     
     currentPrompt = `Kamu adalah AI guru GeoSMART.
 
-<<<<<<< HEAD
 Tugas:
 - Beri PETUNJUK (clue) langkah demi langkah  
-=======
-    const prompt = `
-Kamu adalah AI guru GeoSMART.
-
-Tugas:
-- Beri PETUNJUK (clue) langkah demi langkah
->>>>>>> 90ea1ba20d73dfbcb1dcaec41b500ec418e7e9ea
 - Jangan beri jawaban langsung
 
 Soal:
@@ -211,7 +200,6 @@ ${soal}`;
     document.getElementById('aiModal').classList.add('active');
 }
 
-<<<<<<< HEAD
 function copyPrompt(){
     navigator.clipboard.writeText(currentPrompt).then(() => {
         alert('✅ Disalin!');
@@ -230,42 +218,6 @@ function closeModal(){
 document.addEventListener('click', function(e) {
     if(e.target.id === 'aiModal') closeModal();
 });
-=======
-    copyAndOpen(prompt);
-}
-
-
-// 🔥 fungsi utama
-function copyAndOpen(text){
-    
-    // coba clipboard modern
-    if (navigator.clipboard && window.isSecureContext) {
-        navigator.clipboard.writeText(text).then(() => {
-            alert("✅ Prompt sudah disalin!\nSetelah ini Gemini terbuka, langsung paste ya.");
-            window.location.href = "https://gemini.google.com/app";
-        }).catch(() => {
-            fallback(text);
-        });
-    } else {
-        fallback(text);
-    }
-}
-
-
-// 🔁 fallback biar tetap bisa di HP lama
-function fallback(text){
-    const textarea = document.createElement("textarea");
-    textarea.value = text;
-    document.body.appendChild(textarea);
-    textarea.select();
-    document.execCommand("copy");
-    document.body.removeChild(textarea);
-
-    alert("✅ Prompt disalin (mode fallback)\nGemini akan dibuka.");
-    window.location.href = "https://gemini.google.com/app";
-}
-
->>>>>>> 90ea1ba20d73dfbcb1dcaec41b500ec418e7e9ea
 </script>
 
 
