@@ -224,20 +224,58 @@ function copyPrompt() {
     }
 }
 
-function openGemini(){
-    // Salin otomatis saat klik tombol buka agar user tidak lupa
-    navigator.clipboard.writeText(currentPrompt);
+
+function tanyaAI(btn) {
+    // Mengambil teks soal
+    const soal = btn.parentElement.querySelector('p').innerText;
     
-    // Gunakan lokasi window agar tidak dianggap pop-up yang mencurigakan di HP
-    window.location.href = 'https://gemini.google.com/app';
+    currentPrompt = `Kamu adalah AI guru GeoSMART.\n\nTugas:\n- Beri PETUNJUK (clue) langkah demi langkah\n- Jangan beri jawaban langsung\n\nSoal:\n${soal}`;
+    
+    document.getElementById('promptText').textContent = currentPrompt;
+    document.getElementById('aiModal').classList.add('active');
 }
 
-function closeModal(){
+// Fungsi ini dirancang khusus untuk kompatibilitas HP
+function openGemini() {
+    const text = currentPrompt;
+
+    // 1. Proses Menyalin (Metode Hybrid)
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text);
+    } else {
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        textArea.style.position = "fixed"; // Hindari scrolling
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+    }
+
+    // 2. Memberi feedback kecil
+    alert('Prompt soal sudah OTOMATIS DISALIN.\nSilakan tempel (paste) di halaman Gemini.');
+
+    // 3. Membuka Gemini (Gunakan _self jika _blank diblokir)
+    // Coba buka di tab baru, jika gagal buka di tab yang sama
+    const newWindow = window.open('https://gemini.google.com/app', '_blank');
+    if (!newWindow || newWindow.closed || typeof newWindow.closed == 'undefined') {
+        window.location.href = 'https://gemini.google.com/app';
+    }
+}
+
+function closeModal() {
     document.getElementById('aiModal').classList.remove('active');
 }
 
-document.addEventListener('click', function(e) {
-    if(e.target.id === 'aiModal') closeModal();
+// Tambahkan listener khusus touch untuk HP
+document.querySelectorAll('.copy-btn').forEach(button => {
+    button.addEventListener('touchstart', function() {
+        this.style.opacity = "0.5";
+    });
+    button.addEventListener('touchend', function() {
+        this.style.opacity = "1";
+    });
 });
 </script>
 
