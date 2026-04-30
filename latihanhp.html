@@ -71,6 +71,45 @@ footer{
     border-left:4px solid #38bdf8;
     padding-left:10px;
 }
+.ai-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.9);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+}
+.ai-modal.active { display: flex; }
+.modal-content {
+    background: #020617;
+    padding: 25px;
+    border-radius: 16px;
+    max-width: 90%;
+    max-height: 80%;
+    border: 2px solid #38bdf8;
+}
+.copy-btn {
+    background: #38bdf8;
+    color: #0f172a;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    margin: 10px 5px;
+}
+.close-btn {
+    background: #ef4444;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+}
 </style>
 </head>
 
@@ -125,7 +164,17 @@ Sebuah bak mandi berbentuk balok memiliki ukuran panjang 1 meter, lebar 80 cm, d
 </p>
 <button class="btn-ai" onclick="tanyaAI(this)">Tanya AI Gemini</button>
 </div>
-
+<div id="aiModal" class="ai-modal">
+    <div class="modal-content">
+        <h3 style="color:#38bdf8; margin-top:0;">📋 Prompt untuk Gemini</h3>
+        <div id="promptText" style="background:#1e293b; padding:15px; border-radius:10px; max-height:300px; overflow:auto; white-space:pre-wrap; font-size:14px; line-height:1.5;"></div>
+        <div style="margin-top:15px; text-align:center;">
+            <button class="copy-btn" onclick="copyPrompt()">📋 Salin Semua</button>
+            <button class="copy-btn" onclick="openGemini()">🚀 Buka Gemini</button>
+            <button class="close-btn" onclick="closeModal()">❌ Tutup</button>
+        </div>
+    </div>
+</div>
 <footer>
 GeoSMART © 2026 | Platform Numerasi Interaktif GeoSMART
 </footer>
@@ -133,28 +182,44 @@ GeoSMART © 2026 | Platform Numerasi Interaktif GeoSMART
 </div>
 
 <script>
+let currentPrompt = '';
+
 function tanyaAI(btn){
-    // Mengambil teks soal tanpa teks pada tombol
     const soal = btn.parentElement.querySelector('p').innerText;
+    
+    currentPrompt = `Kamu adalah AI guru GeoSMART.
 
-    const prompt = `
-Kamu adalah AI guru GeoSMART.
-
-Tugas kamu:
-- Hanya memberi PETUNJUK (clue) langkah demi langkah.
-- JANGAN memberi jawaban akhir secara langsung.
-- Bantu siswa memahami konsep (misalnya konversi satuan atau rumus yang tepat).
+Tugas:
+- Beri PETUNJUK (clue) langkah demi langkah  
+- Jangan beri jawaban langsung
 
 Soal:
-${soal}
-`;
+${soal}`;
+    
+    document.getElementById('promptText').textContent = currentPrompt;
+    document.getElementById('aiModal').classList.add('active');
+}
 
-    navigator.clipboard.writeText(prompt).then(() => {
-        alert("Prompt petunjuk telah disalin! Silakan tempelkan di Gemini.");
-        window.open("https://gemini.google.com/app", "_blank");
+function copyPrompt(){
+    navigator.clipboard.writeText(currentPrompt).then(() => {
+        alert('✅ Disalin!');
     });
 }
+
+function openGemini(){
+    window.open('https://gemini.google.com/app', '_blank');
+    closeModal();
+}
+
+function closeModal(){
+    document.getElementById('aiModal').classList.remove('active');
+}
+
+document.addEventListener('click', function(e) {
+    if(e.target.id === 'aiModal') closeModal();
+});
 </script>
+
 
 </body>
 </html>

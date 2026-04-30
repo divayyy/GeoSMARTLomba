@@ -339,11 +339,39 @@ model-viewer {
     }
     header h1, .brand { font-size: 16px; }
 }
+/* LOADING FEEDBACK */
+.loading-toast {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: linear-gradient(45deg, #38bdf8, #0ea5e9);
+    color: white;
+    padding: 12px 20px;
+    border-radius: 25px;
+    font-weight: 600;
+    box-shadow: 0 8px 25px rgba(56,189,248,0.4);
+    z-index: 9999;
+    transform: scale(0);
+    transition: all 0.3s ease;
+    display: none;
+}
+.loading-toast.show {
+    display: block;
+    transform: scale(1);
+    animation: bounce 0.5s ease;
+}
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: scale(1); }
+    40% { transform: scale(1.05); }
+    60% { transform: scale(1.02); }
+}
 </style>
 </head>
 
 <body>
-
+<div id="copyToast" class="loading-toast">
+    <i class="fa-solid fa-copy me-2"></i>✅ Teks Dicopy! Buka Gemini 👆
+</div>
 <header>
     <a href="dashboardhp.html" class="back-btn">⬅ Kembali</a>
     <h1>🧊 Balok - GEOSMART</h1>
@@ -381,9 +409,10 @@ model-viewer {
                 <li><b>Balok:</b> Panjang (p), Lebar (l), Tinggi (t) <b>bisa beda-beda</b></li>
             </ul>
         </p>
-        <button class="ai-mini-btn" onclick="tanyaGemini('pengertian')">
-            ✨ Tanya Gemini
-        </button>
+<button class="ai-mini-btn" onclick="tanyaGemini('pengertian')" id="btn-pengertian">
+    <span class="btn-text">✨ Tanya Gemini</span>
+    <span class="btn-loading" style="display:none;">⏳ Loading...</span>
+</button>
 
         <!-- SIFAT -->
         <div class="section mt-4">
@@ -398,9 +427,10 @@ model-viewer {
                 <li>4 garis miring panjang <b>bertemu di tengah</b></li>
             </ul>
         </div>
-        <button class="btn btn-sm btn-info mt-2" onclick="tanyaGemini('ciri')">
-            🤖 Tanya ke Gemini
-        </button>
+<button class="ai-mini-btn" onclick="tanyaGemini('ciri')" id="btn-pengertian">
+    <span class="btn-text">✨ Tanya Gemini</span>
+    <span class="btn-loading" style="display:none;">⏳ Loading...</span>
+</button>
 
         <!-- PROPERTY -->
         <div class="row g-3 mt-3">
@@ -481,9 +511,10 @@ model-viewer {
                 </div>
             </div>
         </div>
-        <button class="btn btn-sm btn-info mt-3" onclick="tanyaGemini('unsur')">
-            🤖 Tanya Unsur ke Gemini
-        </button>
+<button class="ai-mini-btn" onclick="tanyaGemini('unsur')" id="btn-pengertian">
+    <span class="btn-text">✨ Tanya Gemini</span>
+    <span class="btn-loading" style="display:none;">⏳ Loading...</span>
+</button>
     </div>
 <!-- ===== GEOGEBRA ===== -->
 <div class="section">
@@ -702,9 +733,10 @@ model-viewer {
                 </div>
             </div>
         </div>
-        <button class="btn btn-sm btn-info mt-2" onclick="tanyaGemini('rumus')">
-            🤖 Tanya Rumus ke Gemini
-        </button>
+<button class="ai-mini-btn" onclick="tanyaGemini('rumus')" id="btn-pengertian">
+    <span class="btn-text">✨ Tanya Gemini</span>
+    <span class="btn-loading" style="display:none;">⏳ Loading...</span>
+</button>
     </div>
 
     <!-- CONTOH SOAL INTERAKTIF -->
@@ -897,9 +929,10 @@ model-viewer {
                 </div>
             </div>
         </div>
-        <button class="btn btn-warning mt-3" onclick="tanyaGemini('latihan')">
-            🧠 Minta Soal Baru dari Gemini
-        </button>
+<button class="ai-mini-btn" onclick="tanyaGemini('latihan')" id="btn-pengertian">
+    <span class="btn-text">✨ Tanya Gemini</span>
+    <span class="btn-loading" style="display:none;">⏳ Loading...</span>
+</button>
     </div>
 
     <!-- DUNIA NYATA -->
@@ -1047,9 +1080,10 @@ model-viewer {
             bagaimana cara menghitung berapa banyak barang yang bisa dimasukkan ke dalamnya?
         </div>
         <div class="text-center mt-4">
-            <button class="btn btn-info" onclick="tanyaGemini('dunia')">
-                🤖 Tanya AI tentang Balok di Sekitar Kita
-            </button>
+<button class="ai-mini-btn" onclick="tanyaGemini('dunia')" id="btn-pengertian">
+    <span class="btn-text">✨ Tanya Gemini</span>
+    <span class="btn-loading" style="display:none;">⏳ Loading...</span>
+</button>
         </div>
     </div>
 
@@ -1075,71 +1109,60 @@ model-viewer {
         }
     }
 
-    // TANYA GEMINI AI (dari file kedua - sudah BALOK)
-    function tanyaGemini(mode) {
-        let pesan = "";
+ function tanyaGemini(mode) {
+    let pesan = "";
 
-        if (mode === "pengertian") {
-            pesan = `Saya siswa SMP. Jelaskan pengertian balok dengan bahasa sangat sederhana seperti guru.
-Gunakan contoh benda sehari-hari agar mudah dipahami.`;
-        } 
-
-        else if (mode === "ciri") {
-            pesan = `Saya siswa SMP. Jelaskan ciri-ciri balok dengan cara mudah diingat.
-Gunakan poin-poin sederhana dan contoh benda nyata.`;
-        } 
-
-        else if (mode === "unsur") {
-            pesan = `Saya siswa SMP. Jelaskan unsur-unsur balok (sisi, rusuk, sudut, diagonal).
-Bantu saya membayangkan bentuknya dengan penjelasan sederhana.`;
-        } 
-
-        else if (mode === "rumus") {
-            pesan = `Saya siswa SMP. Jelaskan rumus balok (luas permukaan dan volume) secara pelan-pelan.
-Berikan:
-1. Arti simbol (p, l, t)
-2. Cara menghitung
-3. Contoh soal
-4. Pembahasan bertahap`;
-        } 
-
-        else if (mode === "latihan") {
-            pesan = `Saya siswa SMP. Berikan 1 soal tentang balok.
-Jangan langsung beri jawaban, tapi beri petunjuk (clue) langkah demi langkah.
-Setelah itu baru beri pembahasan lengkap.`;
-        } 
-
-        else if (mode === "jaring") {
-            pesan = `Saya siswa SMP. Tolong jelaskan jaring-jaring balok seperti guru mengajar di kelas.
-Gunakan:
-- bahasa sederhana
-- analogi (misalnya kardus dibuka)
-- langkah membayangkan
-- 1 pertanyaan kecil untuk saya jawab`;
-        } 
-
-        else if (mode === "dunia") {
-            pesan = `Saya siswa SMP. Jelaskan contoh balok dalam kehidupan sehari-hari dengan cara sederhana.
-Gunakan:
-- contoh nyata
-- penjelasan mudah dipahami
-- kaitkan dengan volume dan luas
-- beri 1 pertanyaan latihan`;
-        }
-
-        // ⛔ kalau mode tidak ditemukan
-        if (pesan === "") {
-            alert("Mode tidak dikenali!");
-            return;
-        }
-
-        // COPY ke clipboard
-        navigator.clipboard.writeText(pesan).catch(()=>{});
-
-        // Buka Gemini
-        const url = `https://gemini.google.com/app?q=${encodeURIComponent(pesan)}`;
-        window.open(url, "_blank");
+    if (mode === "pengertian") {
+        pesan = `Saya siswa SMP. Jelaskan pengertian balok dengan bahasa sangat sederhana seperti guru. Gunakan contoh benda sehari-hari agar mudah dipahami.`;
+    } 
+    else if (mode === "ciri") {
+        pesan = `Saya siswa SMP. Jelaskan ciri-ciri balok dengan cara mudah diingat. Gunakan poin-poin sederhana dan contoh benda nyata.`;
+    } 
+    else if (mode === "unsur") {
+        pesan = `Saya siswa SMP. Jelaskan unsur-unsur balok (sisi, rusuk, sudut, diagonal). Bantu saya membayangkan bentuknya dengan penjelasan sederhana.`;
+    } 
+    else if (mode === "rumus") {
+        pesan = `Saya siswa SMP. Jelaskan rumus balok (luas permukaan dan volume) secara pelan-pelan. Berikan: 1. Arti simbol (p, l, t) 2. Cara menghitung 3. Contoh soal 4. Pembahasan bertahap`;
+    } 
+    else if (mode === "latihan") {
+        pesan = `Saya siswa SMP. Berikan 1 soal tentang balok. Jangan langsung beri jawaban, tapi beri petunjuk (clue) langkah demi langkah. Setelah itu baru beri pembahasan lengkap.`;
+    } 
+    else if (mode === "dunia") {
+        pesan = `Saya siswa SMP. Jelaskan contoh balok dalam kehidupan sehari-hari dengan cara sederhana. Gunakan: - contoh nyata - penjelasan mudah dipahami - kaitkan dengan volume dan luas - beri 1 pertanyaan latihan`;
     }
+
+    if (pesan === "") {
+        alert("Mode tidak dikenali!");
+        return;
+    }
+
+    // ✅ COPY KE CLIPBOARD
+    navigator.clipboard.writeText(pesan).then(() => {
+        console.log('✅ Teks berhasil dicopy!');
+    }).catch(err => {
+        console.log('❌ Gagal copy:', err);
+        // Fallback: tampilkan alert dengan teks
+        alert('Copy manual: ' + pesan);
+    });
+
+    // ✅ BUKA GEMINI - MOBILE FRIENDLY
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    
+    if (isMobile) {
+        // HP: Langsung buka Gemini app/web
+        const geminiUrl = `https://gemini.google.com/app?q=${encodeURIComponent(pesan)}`;
+        window.open(geminiUrl, '_blank', 'noopener,noreferrer');
+        
+        // Tampilkan notifikasi sukses
+        setTimeout(() => {
+            alert('✅ Teks sudah dicopy!\n📱 Buka Gemini dan paste (Ctrl+V)');
+        }, 500);
+    } else {
+        // Desktop: buka langsung
+        const geminiUrl = `https://gemini.google.com/app?q=${encodeURIComponent(pesan)}`;
+        window.open(geminiUrl, '_blank');
+    }
+}
 </script>
 
 </body>
