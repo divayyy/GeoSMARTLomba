@@ -200,10 +200,28 @@ ${soal}`;
     document.getElementById('aiModal').classList.add('active');
 }
 
-function copyPrompt(){
-    navigator.clipboard.writeText(currentPrompt).then(() => {
-        alert('✅ Disalin!');
-    });
+function copyPrompt() {
+    const text = currentPrompt;
+    
+    // Coba cara modern
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(() => {
+            alert('✅ Berhasil disalin!');
+        });
+    } else {
+        // Cara lama (fallback) untuk HP yang tidak mendukung clipboard API
+        let textArea = document.createElement("textarea");
+        textArea.value = text;
+        document.body.appendChild(textArea);
+        textArea.select();
+        try {
+            document.execCommand('copy');
+            alert('✅ Berhasil disalin!');
+        } catch (err) {
+            alert('Gagal menyalin, silakan salin manual.');
+        }
+        document.body.removeChild(textArea);
+    }
 }
 
 function openGemini(){
