@@ -207,8 +207,11 @@ function copyPrompt(){
 }
 
 function openGemini(){
-    window.open('https://gemini.google.com/app', '_blank');
-    closeModal();
+    // Salin otomatis saat klik tombol buka agar user tidak lupa
+    navigator.clipboard.writeText(currentPrompt);
+    
+    // Gunakan lokasi window agar tidak dianggap pop-up yang mencurigakan di HP
+    window.location.href = 'https://gemini.google.com/app';
 }
 
 function closeModal(){
