@@ -376,6 +376,85 @@ model-viewer {
         padding: 6px 12px !important;
     }
 }
+/* ================= SUPER FIX MOBILE ================= */
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+/* Pastikan semua elemen tidak melebar */
+* {
+    max-width: 100%;
+}
+
+/* Container biar tidak kepotong */
+.container {
+    width: 100%;
+    padding-left: 12px;
+    padding-right: 12px;
+}
+
+/* TAB MENU WAJIB SCROLL KE SAMPING */
+.tab-menu {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: 8px;
+    padding-bottom: 5px;
+}
+
+/* Hilangkan scrollbar biar rapi */
+.tab-menu::-webkit-scrollbar {
+    display: none;
+}
+
+/* Tombol tab tidak kepotong */
+.tab-menu button {
+    flex: 0 0 auto;
+    white-space: nowrap;
+}
+
+/* IFRAME GEO GEBRA FIX */
+.geo-box .iframe-wrapper {
+    width: 100%;
+    padding-bottom: 85%; /* lebih tinggi biar tidak gepeng */
+}
+
+/* MODEL VIEWER FIX */
+model-viewer {
+    width: 100%;
+    height: 260px;
+}
+
+/* TEXTAREA biar tidak keluar */
+textarea {
+    width: 100%;
+}
+
+/* GAMBAR BIAR RESPONSIVE */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* BUTTON BIAR TIDAK KELUAR */
+button {
+    max-width: 100%;
+}
+
+/* HEADER FIX */
+header {
+    padding: 10px;
+}
+
+header h1 {
+    font-size: 14px;
+}
+
+/* SECTION biar tidak kepotong */
+.section {
+    padding: 15px;
+}
 </style>
 </head>
 
