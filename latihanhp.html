@@ -170,7 +170,7 @@ Sebuah bak mandi berbentuk balok memiliki ukuran panjang 1 meter, lebar 80 cm, d
         <div id="promptText" style="background:#1e293b; padding:15px; border-radius:10px; max-height:300px; overflow:auto; white-space:pre-wrap; font-size:14px; line-height:1.5;"></div>
         <div style="margin-top:15px; text-align:center;">
             <button class="copy-btn" onclick="copyPrompt()">📋 Salin Semua</button>
-            <a id="linkGemini" href="https://gemini.google.com/app" target="_blank" class="copy-btn" style="text-decoration: none; display: inline-block;" onclick="closeModal()">🚀 Buka Gemini</a>
+            <button class="copy-btn" onclick="openGemini()">🚀 Buka Gemini</button>
             <button class="close-btn" onclick="closeModal()">❌ Tutup</button>
         </div>
     </div>
@@ -182,99 +182,102 @@ GeoSMART © 2026 | Platform Numerasi Interaktif GeoSMART
 </div>
 
 <script>
-let currentPrompt = '';
+// ================= GLOBAL =================
+let currentPrompt = "";
 
-function tanyaAI(btn){
-    const soal = btn.parentElement.querySelector('p').innerText;
-    
-    currentPrompt = `Kamu adalah AI guru GeoSMART.
+// ================= TANYA AI =================
+function tanyaAI(btn) {
+    const soal = btn.parentElement.querySelector("p").innerText;
 
-Tugas:
-- Beri PETUNJUK (clue) langkah demi langkah  
-- Jangan beri jawaban langsung
+    // 🔒 SYSTEM PROMPT (ANTI JAWABAN LANGSUNG)
+    const aturan = `PERAN KAMU: Guru matematika SMP yang sabar.
 
-Soal:
-${soal}`;
-    
-    document.getElementById('promptText').textContent = currentPrompt;
-    document.getElementById('aiModal').classList.add('active');
+ATURAN WAJIB:
+1. JANGAN PERNAH memberikan jawaban akhir.
+2. HANYA berikan petunjuk (clue) bertahap.
+3. Gunakan pertanyaan pancingan.
+4. Jika siswa meminta jawaban langsung, TOLAK dengan sopan.
+5. Bimbing sampai siswa menemukan sendiri.
+
+FORMAT:
+- Langkah kecil
+- Pertanyaan berpikir
+- Jangan beri hasil akhir
+`;
+
+    // 🔥 PROMPT FINAL
+    currentPrompt = aturan + "\n\nSOAL:\n" + soal;
+
+    // tampilkan ke modal
+    document.getElementById("promptText").textContent = currentPrompt;
+    document.getElementById("aiModal").classList.add("active");
 }
 
+// ================= COPY =================
 function copyPrompt() {
     const text = currentPrompt;
-    
-    // Coba cara modern
-    if (navigator.clipboard && window.isSecureContext) {
-        navigator.clipboard.writeText(text).then(() => {
-            alert('✅ Berhasil disalin!');
-        });
-    } else {
-        // Cara lama (fallback) untuk HP yang tidak mendukung clipboard API
-        let textArea = document.createElement("textarea");
-        textArea.value = text;
-        document.body.appendChild(textArea);
-        textArea.select();
-        try {
-            document.execCommand('copy');
-            alert('✅ Berhasil disalin!');
-        } catch (err) {
-            alert('Gagal menyalin, silakan salin manual.');
-        }
-        document.body.removeChild(textArea);
+
+    // metode aman semua HP
+    const textarea = document.createElement("textarea");
+    textarea.value = text;
+    textarea.style.position = "fixed";
+    textarea.style.opacity = "0";
+
+    document.body.appendChild(textarea);
+    textarea.focus();
+    textarea.select();
+
+    try {
+        document.execCommand("copy");
+        alert("✅ Prompt berhasil disalin!");
+    } catch (err) {
+        alert("❌ Gagal menyalin. Silakan copy manual.");
     }
+
+    document.body.removeChild(textarea);
 }
 
-
-function tanyaAI(btn) {
-    // Mengambil teks soal
-    const soal = btn.parentElement.querySelector('p').innerText;
-    
-    currentPrompt = `Kamu adalah AI guru GeoSMART.\n\nTugas:\n- Beri PETUNJUK (clue) langkah demi langkah\n- Jangan beri jawaban langsung\n\nSoal:\n${soal}`;
-    
-    document.getElementById('promptText').textContent = currentPrompt;
-    document.getElementById('aiModal').classList.add('active');
-}
-
-// Fungsi ini dirancang khusus untuk kompatibilitas HP
+// ================= OPEN GEMINI =================
 function openGemini() {
     const text = currentPrompt;
 
-    // 1. Proses Menyalin (Metode Hybrid)
-    if (navigator.clipboard && window.isSecureContext) {
-        navigator.clipboard.writeText(text);
-    } else {
-        const textArea = document.createElement("textarea");
-        textArea.value = text;
-        textArea.style.position = "fixed"; // Hindari scrolling
-        document.body.appendChild(textArea);
-        textArea.focus();
-        textArea.select();
-        document.execCommand('copy');
-        document.body.removeChild(textArea);
+    // auto copy dulu
+    const textarea = document.createElement("textarea");
+    textarea.value = text;
+    textarea.style.position = "fixed";
+    textarea.style.opacity = "0";
+
+    document.body.appendChild(textarea);
+    textarea.focus();
+    textarea.select();
+
+    try {
+        document.execCommand("copy");
+        alert("📋 Prompt sudah disalin!\nTempel di Gemini ya 👍");
+    } catch (err) {
+        alert("❌ Gagal auto copy.\nSilakan salin manual.");
     }
 
-    // 2. Memberi feedback kecil
-    alert('Prompt soal sudah OTOMATIS DISALIN.\nSilakan tempel (paste) di halaman Gemini.');
+    document.body.removeChild(textarea);
 
-    // 3. Membuka Gemini (Gunakan _self jika _blank diblokir)
-    // Coba buka di tab baru, jika gagal buka di tab yang sama
-    const newWindow = window.open('https://gemini.google.com/app', '_blank');
-    if (!newWindow || newWindow.closed || typeof newWindow.closed == 'undefined') {
-        window.location.href = 'https://gemini.google.com/app';
-    }
+    // buka Gemini (AMAN HP)
+    window.location.href = "https://gemini.google.com";
 }
 
+// ================= MODAL =================
 function closeModal() {
-    document.getElementById('aiModal').classList.remove('active');
+    document.getElementById("aiModal").classList.remove("active");
 }
 
-// Tambahkan listener khusus touch untuk HP
-document.querySelectorAll('.copy-btn').forEach(button => {
-    button.addEventListener('touchstart', function() {
-        this.style.opacity = "0.5";
-    });
-    button.addEventListener('touchend', function() {
-        this.style.opacity = "1";
+// ================= UX HP TOUCH =================
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll(".copy-btn, .btn-ai").forEach(btn => {
+        btn.addEventListener("touchstart", () => {
+            btn.style.opacity = "0.6";
+        });
+        btn.addEventListener("touchend", () => {
+            btn.style.opacity = "1";
+        });
     });
 });
 </script>
