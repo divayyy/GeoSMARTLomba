@@ -1060,34 +1060,74 @@ function tanyaGemini(mode) {
     let pesan = "";
 
     if (mode === "pengertian") {
-        pesan = "Saya siswa SMP. Jelaskan pengertian balok dengan bahasa sederhana.";
+        pesan = `Saya siswa SMP. Jelaskan pengertian balok dengan bahasa sangat sederhana seperti guru.
+Gunakan contoh benda sehari-hari agar mudah dipahami.`;
     } 
     else if (mode === "ciri") {
-        pesan = "Jelaskan ciri-ciri balok dengan mudah.";
+        pesan = `Saya siswa SMP. Jelaskan ciri-ciri balok dengan cara mudah diingat.
+Gunakan poin-poin sederhana dan contoh benda nyata.`;
     } 
     else if (mode === "unsur") {
-        pesan = "Jelaskan unsur balok secara sederhana.";
+        pesan = `Saya siswa SMP. Jelaskan unsur-unsur balok (sisi, rusuk, sudut, diagonal).
+Bantu saya membayangkan bentuknya dengan penjelasan sederhana.`;
     } 
     else if (mode === "rumus") {
-        pesan = "Jelaskan rumus balok dengan contoh.";
+        pesan = `Saya siswa SMP. Jelaskan rumus balok (luas permukaan dan volume) secara pelan-pelan.
+Berikan:
+1. Arti simbol (p, l, t)
+2. Cara menghitung
+3. Contoh soal
+4. Pembahasan bertahap`;
     } 
     else if (mode === "latihan") {
-        pesan = "Berikan soal balok dan pembahasan.";
+        pesan = `Saya siswa SMP. Berikan 1 soal tentang balok.
+Jangan langsung beri jawaban, tapi beri petunjuk (clue) langkah demi langkah.
+Setelah itu baru beri pembahasan lengkap.`;
+    } 
+    else if (mode === "jaring") {
+        pesan = `Saya siswa SMP. Tolong jelaskan jaring-jaring balok seperti guru mengajar di kelas.
+Gunakan:
+- bahasa sederhana
+- analogi (misalnya kardus dibuka)
+- langkah membayangkan
+- 1 pertanyaan kecil untuk saya jawab`;
     } 
     else if (mode === "dunia") {
-        pesan = "Contoh balok dalam kehidupan sehari-hari.";
+        pesan = `Saya siswa SMP. Jelaskan contoh balok dalam kehidupan sehari-hari dengan cara sederhana.
+Gunakan:
+- contoh nyata
+- penjelasan mudah dipahami
+- kaitkan dengan volume dan luas
+- beri 1 pertanyaan latihan`;
     }
 
+    // kalau mode tidak ditemukan
     if (pesan === "") {
         alert("Mode tidak dikenali!");
         return;
     }
 
-    // ❌ HAPUS clipboard (biar tidak error di HP)
+    // =========================
+    // ✅ SOLUSI AMAN HP
+    // =========================
 
-    // ✅ GANTI window.open → location.href
-    const url = "https://gemini.google.com/app?q=" + encodeURIComponent(pesan);
-    window.location.href = url;
+    // 1. Tampilkan prompt ke user
+    alert("📋 Salin pertanyaan ini lalu tempel di Gemini:\n\n" + pesan);
+
+    // 2. Coba copy (fallback kalau bisa)
+    try {
+        const textarea = document.createElement("textarea");
+        textarea.value = pesan;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand("copy");
+        document.body.removeChild(textarea);
+    } catch (e) {
+        console.log("Clipboard tidak didukung");
+    }
+
+    // 3. Buka Gemini TANPA query (biar tidak bug di HP)
+    window.location.href = "https://gemini.google.com";
 }
 </script>
 
