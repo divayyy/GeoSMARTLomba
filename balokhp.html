@@ -152,40 +152,20 @@ model-viewer {
     animation: fadeIn 0.5s ease; 
 }
 
-/* ========================= */
-/* 🔥 GEOGEBRA RESPONSIVE 🔥 */
-/* ========================= */
-.iframe-wrapper {
+/* GEOGEBRA IFRAME */
+.geo-box .iframe-wrapper {
     position: relative;
     width: 100%;
-    /* Tinggi dikurangi agar tidak ada ruang kosong di bawah */
-    height: 300px; 
-    /* Ubah background dari #ffffff ke warna gelap atau transparan */
-    background: transparent; 
-    border-radius: 15px;
+    padding-bottom: 65%;
+    height: 0;
     overflow: hidden;
-    border: 3px solid #38bdf8;
-    margin-top: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    border-radius: 12px;
 }
-
-.iframe-wrapper iframe {
-    width: 100%;
-    height: 100%;
-    border: none;
-    /* Memastikan tidak ada margin internal dari iframe */
-    margin: 0;
-    padding: 0;
-}
-.iframe-wrapper iframe {
+.geo-box .iframe-wrapper iframe {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100% !important;
-    height: 100% !important;
-    border: none;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    border: 0;
 }
 
 /* FORMULA & PROPERTY CARDS */
@@ -339,39 +319,11 @@ model-viewer {
     }
     header h1, .brand { font-size: 16px; }
 }
-/* LOADING FEEDBACK */
-.loading-toast {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    background: linear-gradient(45deg, #38bdf8, #0ea5e9);
-    color: white;
-    padding: 12px 20px;
-    border-radius: 25px;
-    font-weight: 600;
-    box-shadow: 0 8px 25px rgba(56,189,248,0.4);
-    z-index: 9999;
-    transform: scale(0);
-    transition: all 0.3s ease;
-    display: none;
-}
-.loading-toast.show {
-    display: block;
-    transform: scale(1);
-    animation: bounce 0.5s ease;
-}
-@keyframes bounce {
-    0%, 20%, 50%, 80%, 100% { transform: scale(1); }
-    40% { transform: scale(1.05); }
-    60% { transform: scale(1.02); }
-}
 </style>
 </head>
 
 <body>
-<div id="copyToast" class="loading-toast">
-    <i class="fa-solid fa-copy me-2"></i>✅ Teks Dicopy! Buka Gemini 👆
-</div>
+
 <header>
     <a href="dashboardhp.html" class="back-btn">⬅ Kembali</a>
     <h1>🧊 Balok - GEOSMART</h1>
@@ -381,7 +333,7 @@ model-viewer {
 
     <!-- PRATINJAU 3D -->
     <div class="section">
-        <h2>Visualisasi 3D</h2>
+        <h2>Visualisasi 3D (Blender)</h2>
         <div class="viewer-box">
             <model-viewer 
                 src="assets/images/bangunruang/balok.glb"
@@ -409,10 +361,9 @@ model-viewer {
                 <li><b>Balok:</b> Panjang (p), Lebar (l), Tinggi (t) <b>bisa beda-beda</b></li>
             </ul>
         </p>
-<button class="ai-mini-btn" onclick="tanyaGemini('pengertian')" id="btn-pengertian">
-    <span class="btn-text">✨ Tanya Gemini</span>
-    <span class="btn-loading" style="display:none;">⏳ Loading...</span>
-</button>
+        <button class="ai-mini-btn" onclick="tanyaGemini('pengertian')">
+            ✨ Tanya Gemini
+        </button>
 
         <!-- SIFAT -->
         <div class="section mt-4">
@@ -427,10 +378,9 @@ model-viewer {
                 <li>4 garis miring panjang <b>bertemu di tengah</b></li>
             </ul>
         </div>
-<button class="ai-mini-btn" onclick="tanyaGemini('ciri')" id="btn-pengertian">
-    <span class="btn-text">✨ Tanya Gemini</span>
-    <span class="btn-loading" style="display:none;">⏳ Loading...</span>
-</button>
+        <button class="btn btn-sm btn-info mt-2" onclick="tanyaGemini('ciri')">
+            🤖 Tanya ke Gemini
+        </button>
 
         <!-- PROPERTY -->
         <div class="row g-3 mt-3">
@@ -511,10 +461,9 @@ model-viewer {
                 </div>
             </div>
         </div>
-<button class="ai-mini-btn" onclick="tanyaGemini('unsur')" id="btn-pengertian">
-    <span class="btn-text">✨ Tanya Gemini</span>
-    <span class="btn-loading" style="display:none;">⏳ Loading...</span>
-</button>
+        <button class="btn btn-sm btn-info mt-3" onclick="tanyaGemini('unsur')">
+            🤖 Tanya Unsur ke Gemini
+        </button>
     </div>
 <!-- ===== GEOGEBRA ===== -->
 <div class="section">
@@ -733,10 +682,9 @@ model-viewer {
                 </div>
             </div>
         </div>
-<button class="ai-mini-btn" onclick="tanyaGemini('rumus')" id="btn-pengertian">
-    <span class="btn-text">✨ Tanya Gemini</span>
-    <span class="btn-loading" style="display:none;">⏳ Loading...</span>
-</button>
+        <button class="btn btn-sm btn-info mt-2" onclick="tanyaGemini('rumus')">
+            🤖 Tanya Rumus ke Gemini
+        </button>
     </div>
 
     <!-- CONTOH SOAL INTERAKTIF -->
@@ -929,10 +877,9 @@ model-viewer {
                 </div>
             </div>
         </div>
-<button class="ai-mini-btn" onclick="tanyaGemini('latihan')" id="btn-pengertian">
-    <span class="btn-text">✨ Tanya Gemini</span>
-    <span class="btn-loading" style="display:none;">⏳ Loading...</span>
-</button>
+        <button class="btn btn-warning mt-3" onclick="tanyaGemini('latihan')">
+            🧠 Minta Soal Baru dari Gemini
+        </button>
     </div>
 
     <!-- DUNIA NYATA -->
@@ -1080,10 +1027,9 @@ model-viewer {
             bagaimana cara menghitung berapa banyak barang yang bisa dimasukkan ke dalamnya?
         </div>
         <div class="text-center mt-4">
-<button class="ai-mini-btn" onclick="tanyaGemini('dunia')" id="btn-pengertian">
-    <span class="btn-text">✨ Tanya Gemini</span>
-    <span class="btn-loading" style="display:none;">⏳ Loading...</span>
-</button>
+            <button class="btn btn-info" onclick="tanyaGemini('dunia')">
+                🤖 Tanya AI tentang Balok di Sekitar Kita
+            </button>
         </div>
     </div>
 
@@ -1109,26 +1055,27 @@ model-viewer {
         }
     }
 
- function tanyaGemini(mode) {
+    // TANYA GEMINI AI (dari file kedua - sudah BALOK)
+function tanyaGemini(mode) {
     let pesan = "";
 
     if (mode === "pengertian") {
-        pesan = `Saya siswa SMP. Jelaskan pengertian balok dengan bahasa sangat sederhana seperti guru. Gunakan contoh benda sehari-hari agar mudah dipahami.`;
+        pesan = "Saya siswa SMP. Jelaskan pengertian balok dengan bahasa sederhana.";
     } 
     else if (mode === "ciri") {
-        pesan = `Saya siswa SMP. Jelaskan ciri-ciri balok dengan cara mudah diingat. Gunakan poin-poin sederhana dan contoh benda nyata.`;
+        pesan = "Jelaskan ciri-ciri balok dengan mudah.";
     } 
     else if (mode === "unsur") {
-        pesan = `Saya siswa SMP. Jelaskan unsur-unsur balok (sisi, rusuk, sudut, diagonal). Bantu saya membayangkan bentuknya dengan penjelasan sederhana.`;
+        pesan = "Jelaskan unsur balok secara sederhana.";
     } 
     else if (mode === "rumus") {
-        pesan = `Saya siswa SMP. Jelaskan rumus balok (luas permukaan dan volume) secara pelan-pelan. Berikan: 1. Arti simbol (p, l, t) 2. Cara menghitung 3. Contoh soal 4. Pembahasan bertahap`;
+        pesan = "Jelaskan rumus balok dengan contoh.";
     } 
     else if (mode === "latihan") {
-        pesan = `Saya siswa SMP. Berikan 1 soal tentang balok. Jangan langsung beri jawaban, tapi beri petunjuk (clue) langkah demi langkah. Setelah itu baru beri pembahasan lengkap.`;
+        pesan = "Berikan soal balok dan pembahasan.";
     } 
     else if (mode === "dunia") {
-        pesan = `Saya siswa SMP. Jelaskan contoh balok dalam kehidupan sehari-hari dengan cara sederhana. Gunakan: - contoh nyata - penjelasan mudah dipahami - kaitkan dengan volume dan luas - beri 1 pertanyaan latihan`;
+        pesan = "Contoh balok dalam kehidupan sehari-hari.";
     }
 
     if (pesan === "") {
@@ -1136,32 +1083,11 @@ model-viewer {
         return;
     }
 
-    // ✅ COPY KE CLIPBOARD
-    navigator.clipboard.writeText(pesan).then(() => {
-        console.log('✅ Teks berhasil dicopy!');
-    }).catch(err => {
-        console.log('❌ Gagal copy:', err);
-        // Fallback: tampilkan alert dengan teks
-        alert('Copy manual: ' + pesan);
-    });
+    // ❌ HAPUS clipboard (biar tidak error di HP)
 
-    // ✅ BUKA GEMINI - MOBILE FRIENDLY
-    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-    
-    if (isMobile) {
-        // HP: Langsung buka Gemini app/web
-        const geminiUrl = `https://gemini.google.com/app?q=${encodeURIComponent(pesan)}`;
-        window.open(geminiUrl, '_blank', 'noopener,noreferrer');
-        
-        // Tampilkan notifikasi sukses
-        setTimeout(() => {
-            alert('✅ Teks sudah dicopy!\n📱 Buka Gemini dan paste (Ctrl+V)');
-        }, 500);
-    } else {
-        // Desktop: buka langsung
-        const geminiUrl = `https://gemini.google.com/app?q=${encodeURIComponent(pesan)}`;
-        window.open(geminiUrl, '_blank');
-    }
+    // ✅ GANTI window.open → location.href
+    const url = "https://gemini.google.com/app?q=" + encodeURIComponent(pesan);
+    window.location.href = url;
 }
 </script>
 
