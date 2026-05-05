@@ -1057,64 +1057,84 @@ model-viewer {
 
     // TANYA GEMINI AI (dari file kedua - sudah BALOK)
 function tanyaGemini(mode) {
-    let pesan = "";
 
+    // 🔒 SYSTEM PROMPT (aturan utama)
+    const aturan = `PERAN KAMU: Guru matematika SMP yang sabar.
+
+ATURAN WAJIB:
+1. JANGAN PERNAH memberikan jawaban akhir secara langsung.
+2. HANYA berikan petunjuk (clue) bertahap.
+3. Gunakan pertanyaan pancingan agar siswa berpikir.
+4. Jika siswa meminta "jawaban langsung", kamu HARUS MENOLAK dengan sopan.
+5. Bimbing siswa sampai menemukan jawaban sendiri.
+
+GAYA:
+- Bahasa sangat sederhana
+- Seperti guru mengajar di kelas
+- Pelan-pelan dan bertahap
+
+LARANGAN:
+❌ Tidak boleh memberi hasil akhir
+❌ Tidak boleh memberi angka jawaban langsung
+❌ Tidak boleh lompat ke kesimpulan
+
+FORMAT:
+👉 Berikan langkah kecil (clue)
+👉 Ajak siswa berpikir
+👉 Tunggu respon siswa
+`;
+
+    let isi = "";
+
+    // ================= MODE =================
     if (mode === "pengertian") {
-        pesan = `Saya siswa SMP. Jelaskan pengertian balok dengan bahasa sangat sederhana seperti guru.
-Gunakan contoh benda sehari-hari agar mudah dipahami.`;
+        isi = `Jelaskan pengertian balok dengan bantuan pertanyaan pancingan.
+Gunakan contoh benda sehari-hari.`;
     } 
+    
     else if (mode === "ciri") {
-        pesan = `Saya siswa SMP. Jelaskan ciri-ciri balok dengan cara mudah diingat.
-Gunakan poin-poin sederhana dan contoh benda nyata.`;
+        isi = `Bimbing siswa menemukan ciri-ciri balok.
+Jangan langsung sebutkan semua, tapi arahkan dengan pertanyaan.`;
     } 
+    
     else if (mode === "unsur") {
-        pesan = `Saya siswa SMP. Jelaskan unsur-unsur balok (sisi, rusuk, sudut, diagonal).
-Bantu saya membayangkan bentuknya dengan penjelasan sederhana.`;
+        isi = `Bantu siswa memahami unsur balok (sisi, rusuk, sudut, diagonal).
+Gunakan pertanyaan agar siswa menebak sendiri.`;
     } 
+    
     else if (mode === "rumus") {
-        pesan = `Saya siswa SMP. Jelaskan rumus balok (luas permukaan dan volume) secara pelan-pelan.
-Berikan:
-1. Arti simbol (p, l, t)
-2. Cara menghitung
-3. Contoh soal
-4. Pembahasan bertahap`;
+        isi = `Bimbing siswa menemukan rumus balok (luas dan volume).
+Gunakan langkah berpikir, bukan langsung memberi rumus.`;
     } 
+    
     else if (mode === "latihan") {
-        pesan = `Saya siswa SMP. Berikan 1 soal tentang balok.
-Jangan langsung beri jawaban, tapi beri petunjuk (clue) langkah demi langkah.
-Setelah itu baru beri pembahasan lengkap.`;
+        isi = `Buat 1 soal balok (volume atau luas permukaan).
+Berikan hanya petunjuk langkah demi langkah tanpa jawaban akhir.`;
     } 
+    
     else if (mode === "jaring") {
-        pesan = `Saya siswa SMP. Tolong jelaskan jaring-jaring balok seperti guru mengajar di kelas.
-Gunakan:
-- bahasa sederhana
-- analogi (misalnya kardus dibuka)
-- langkah membayangkan
-- 1 pertanyaan kecil untuk saya jawab`;
+        isi = `Jelaskan jaring-jaring balok dengan analogi (misalnya kardus dibuka).
+Gunakan pertanyaan agar siswa membayangkan sendiri.`;
     } 
+    
     else if (mode === "dunia") {
-        pesan = `Saya siswa SMP. Jelaskan contoh balok dalam kehidupan sehari-hari dengan cara sederhana.
-Gunakan:
-- contoh nyata
-- penjelasan mudah dipahami
-- kaitkan dengan volume dan luas
-- beri 1 pertanyaan latihan`;
+        isi = `Bimbing siswa mengenali benda balok di kehidupan sehari-hari.
+Gunakan pertanyaan dan contoh nyata.`;
     }
 
-    // kalau mode tidak ditemukan
-    if (pesan === "") {
+    // ================= VALIDASI =================
+    if (isi === "") {
         alert("Mode tidak dikenali!");
         return;
     }
 
-    // =========================
-    // ✅ SOLUSI AMAN HP
-    // =========================
+    // ================= PROMPT FINAL =================
+    const pesan = aturan + "\n\nTUGAS:\n" + isi;
 
-    // 1. Tampilkan prompt ke user
+    // ================= UI USER =================
     alert("📋 Salin pertanyaan ini lalu tempel di Gemini:\n\n" + pesan);
 
-    // 2. Coba copy (fallback kalau bisa)
+    // ================= COPY FALLBACK =================
     try {
         const textarea = document.createElement("textarea");
         textarea.value = pesan;
@@ -1126,7 +1146,7 @@ Gunakan:
         console.log("Clipboard tidak didukung");
     }
 
-    // 3. Buka Gemini TANPA query (biar tidak bug di HP)
+    // ================= OPEN GEMINI =================
     window.location.href = "https://gemini.google.com";
 }
 </script>
